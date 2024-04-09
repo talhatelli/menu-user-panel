@@ -19,8 +19,8 @@ const DishesCard = (props) => {
           <BsStarHalf className=" text-brightColor" />
         </div>
         <div className=" flex flex-row items-center justify-center gap-4">
-          <h3 className=" font-semibold text-lg">{props.price}</h3>
-          <Button title="Buy Now" />
+          <h3 className=" font-semibold text-lg">{props.price}tl</h3>
+          <Button title="Basket" />
         </div>
       </div>
     </div>

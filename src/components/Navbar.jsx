@@ -5,9 +5,12 @@ import Button from "../layouts/Button";
 import { AiOutlineMenuUnfold } from "react-icons/ai";
 import { BiChevronDown } from "react-icons/bi";
 import { AiOutlineClose } from "react-icons/ai";
+import { fetchMenuItemCategories } from "../requests/Requests";
+import CategoryDetail from "./CategoryDetail";
 
-const Navbar = () => {
+const Navbar = ({ categories }) => {
   const [menu, setMenu] = useState(false);
+  const [menuItems, setMenuItems] = useState([]);
 
   const handleChange = () => {
     setMenu(!menu);
@@ -17,6 +20,14 @@ const Navbar = () => {
     setMenu(false);
   };
 
+  const handleCategoryClick = async (categoryId) => {
+    try {
+      const items = await fetchMenuItemCategories(categoryId);
+      setMenuItems(items);
+    } catch (error) {
+      console.error("Error fetching menu items:", error);
+    }
+  };
   return (
     <div className=" fixed w-full">
       <div>
@@ -42,7 +53,7 @@ const Navbar = () => {
             <div className="relative group">
               <div className=" flex items-center gap-1">
                 <Link
-                  to="dishes"
+                  to="category-detail"
                   spy={true}
                   smooth={true}
                   duration={500}
@@ -55,50 +66,20 @@ const Navbar = () => {
               </div>
 
               <ul className="absolute hidden space-y-2 group-hover:block bg-white border border-gray-300 rounded-lg p-5">
-                <li>
-                  <Link
-                    to="dishes"
-                    spy={true}
-                    smooth={true}
-                    duration={500}
-                    className="text-gray-800 hover:text-brightColor transition-all cursor-pointer"
-                  >
-                    Spicy
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="dishes"
-                    spy={true}
-                    smooth={true}
-                    duration={500}
-                    className="text-gray-800 hover:text-brightColor transition-all cursor-pointer"
-                  >
-                    Tasty
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="dishes"
-                    spy={true}
-                    smooth={true}
-                    duration={500}
-                    className="text-gray-800 hover:text-brightColor transition-all cursor-pointer"
-                  >
-                    Delicious
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="dishes"
-                    spy={true}
-                    smooth={true}
-                    duration={500}
-                    className="text-gray-800 hover:text-brightColor transition-all cursor-pointer"
-                  >
-                    Crispy
-                  </Link>
-                </li>
+                {categories.map((category, index) => (
+                  <li key={index}>
+                    <Link
+                      to="category-detail"
+                      spy={true}
+                      smooth={true}
+                      duration={500}
+                      className="text-gray-800 hover:text-brightColor transition-all cursor-pointer"
+                      onClick={() => handleCategoryClick(category._id)}
+                    >
+                      {category.name}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
 
@@ -113,16 +94,16 @@ const Navbar = () => {
             </Link>
 
             <Link
-              to="menu"
+              to="dishes"
               spy={true}
               smooth={true}
               duration={500}
               className="hover:text-brightColor transition-all cursor-pointer"
             >
-              Menu
+              All Items
             </Link>
 
-            <Button title="Add To Card" />
+            <Button title="Basket" />
           </nav>
 
           <div className="md:hidden flex items-center">
@@ -169,19 +150,20 @@ const Navbar = () => {
             About
           </Link>
           <Link
-            to="menu"
+            to="category-detail"
             spy={true}
             smooth={true}
             duration={500}
             className="hover:text-brightColor transition-all cursor-pointer"
             onClick={closeMenu}
           >
-            Menu
+            Category Detail
           </Link>
 
           <Button title="login" />
         </div>
       </div>
+      {/* {menuItems.length > 0 && <CategoryDetail menuItems={menuItems} />} */}
     </div>
   );
 };
