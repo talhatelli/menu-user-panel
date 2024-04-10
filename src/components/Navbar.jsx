@@ -94,7 +94,7 @@ const Navbar = ({ categories }) => {
             </Link>
 
             <Link
-              to="dishes"
+              to="menu-items"
               spy={true}
               smooth={true}
               duration={500}
@@ -130,14 +130,14 @@ const Navbar = ({ categories }) => {
             Home
           </Link>
           <Link
-            to="dishes"
+            to="menu-items"
             spy={true}
             smooth={true}
             duration={500}
             className="hover:text-brightColor transition-all cursor-pointer"
             onClick={closeMenu}
           >
-            Categor
+            Category
           </Link>
           <Link
             to="about"

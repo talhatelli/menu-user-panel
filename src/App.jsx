@@ -4,7 +4,8 @@ import Home from "./components/Home";
 import About from "./components/About";
 import CategoryDetail from "./components/CategoryDetail";
 import Footer from "./components/Footer";
-import Dishes from "./components/Dishes";
+import MenuItems from "./components/MenuItems";
+
 import {
   fetchCategories,
   fetchMenuItems,
@@ -41,8 +42,8 @@ const App = () => {
         <div id="category-detail">
           <CategoryDetail />
         </div>
-        <div id="dishes">
-          <Dishes menuItems={menuItems} />
+        <div id="menu-items">
+          <MenuItems menuItems={menuItems} />
         </div>
         <div id="about">
           <About />

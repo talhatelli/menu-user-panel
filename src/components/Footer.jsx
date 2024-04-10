@@ -20,13 +20,13 @@ const Footer = () => {
           <h1 className=" font-medium text-xl pb-4 pt-5 md:pt-0">Links</h1>
           <nav className=" flex flex-col gap-2">
             <Link
-              to="dishes"
+              to="menu-items"
               spy={true}
               smooth={true}
               duration={500}
               className="hover:text-brightColor transition-all cursor-pointer"
             >
-              Dishes
+              Menu Items
             </Link>
             <Link
               to="about"
@@ -58,14 +58,8 @@ const Footer = () => {
               duration={500}
               className="hover:text-brightColor transition-all cursor-pointer"
             >
-              Home
-            </Link>
-            <a
-              className=" hover:text-brightColor transition-all cursor-pointer"
-              href="/"
-            >
               Back to Top
-            </a>
+            </Link>
           </nav>
         </div>
         <div>

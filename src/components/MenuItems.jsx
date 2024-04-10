@@ -1,11 +1,6 @@
 import React from "react";
-import img1 from "../assets/img/img1.jpg";
-import img2 from "../assets/img/img2.jpg";
-import img3 from "../assets/img/img3.jpg";
-import img4 from "../assets/img/img4.jpg";
-import img5 from "../assets/img/img5.jpg";
-import img6 from "../assets/img/img6.jpg";
 import DishesCard from "../layouts/DishesCard";
+// import MenuItemDetail from "./MenuItemDetail";
 
 const Dishes = ({ menuItems }) => {
   return (
@@ -23,6 +18,9 @@ const Dishes = ({ menuItems }) => {
             price={item.price}
           />
         ))}
+        {/* <div id="menu-item-detail">
+          <MenuItemDetail />
+        </div> */}
       </div>
     </div>
   );
