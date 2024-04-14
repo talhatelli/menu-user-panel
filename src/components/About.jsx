@@ -17,9 +17,7 @@ const About = () => {
           meşhur yemekleri, tatlıları ve içinizi ferahlatacak içecekleri ile
           size güzel bir yemek molası oluşturacağız.
         </p>
-        <div className=" flex justify-center lg:justify-start">
-          <Button title="Learn More" />
-        </div>
+        <div className=" flex justify-center lg:justify-start"></div>
       </div>
     </div>
   );

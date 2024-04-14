@@ -5,13 +5,3 @@ extend: {
       lightText: "#959595",
     },
   },
-
-
-  Elevate Your Inner Foodie with Every Bite.
-
-  Indulge in a symphony of flavors, where each plate is a canvas for
-  culinary excellence.
-
-  FoodieWeb@email.com
-  +64 958 248 966
-  Social media
