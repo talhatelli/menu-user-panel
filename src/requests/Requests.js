@@ -18,7 +18,18 @@ const fetchCategories = async () => {
     throw error;
   }
 };
-
+const fetchAllCategoriesWithItems = async () => {
+  try {
+    const response = await fetch(
+      `${BASE_URL}/categories/all-categories-with-items`
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching menu items:", error);
+    throw error;
+  }
+};
 let categoryDetail = [];
 
 const fetchMenuItemCategories = async (categoryId) => {
@@ -28,20 +39,18 @@ const fetchMenuItemCategories = async (categoryId) => {
       throw new Error("Failed to fetch menu items for category");
     }
     categoryDetail = await response.json();
-    console.log(
-      "%csrc/requests/requests.js:31 categoryDetail",
-      "color: #26bfa5;",
-      categoryDetail
-    );
+
     return categoryDetail;
   } catch (error) {
     console.error("Error fetching menu items for category:", error);
     throw error;
   }
 };
-
-console.log("Initial categoryDetail:", categoryDetail);
-
+console.log(
+  "%csrc/requests/requests.js:38 categoryDetail",
+  "color: #26bfa5;",
+  categoryDetail
+);
 const fetchMenuItems = async () => {
   try {
     const response = await fetch(`${BASE_URL}/menu-items/app`);
@@ -69,4 +78,5 @@ export {
   fetchMenuItemDetail,
   fetchCategories,
   colors,
+  fetchAllCategoriesWithItems,
 };

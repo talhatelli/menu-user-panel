@@ -4,24 +4,27 @@ import Home from "./components/Home";
 import About from "./components/About";
 import CategoryDetail from "./components/CategoryDetail";
 import Footer from "./components/Footer";
-import MenuItems from "./components/MenuItems";
 
 import {
   fetchCategories,
   fetchMenuItems,
   categoryDetail,
+  fetchAllCategoriesWithItems,
 } from "./requests/Requests";
 
 const App = () => {
   const [categories, setCategories] = useState([]);
   const [menuItems, setMenuItems] = useState([]);
+  const [allCategoriesWithItems, setAllCategoriesWithItems] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const categoriesData = await fetchCategories();
         const menuItemsData = await fetchMenuItems();
+        const allCategoriesWithItems = await fetchAllCategoriesWithItems();
         setCategories(categoriesData);
+        setAllCategoriesWithItems(allCategoriesWithItems);
         setMenuItems(menuItemsData);
         console.log(categoryDetail);
       } catch (error) {
@@ -40,10 +43,7 @@ const App = () => {
           <Home />
         </div>
         <div id="category-detail">
-          <CategoryDetail />
-        </div>
-        <div id="menu-items">
-          <MenuItems menuItems={menuItems} />
+          <CategoryDetail allCategoriesWithItems={allCategoriesWithItems} />
         </div>
         <div id="about">
           <About />
