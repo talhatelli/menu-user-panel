@@ -26,7 +26,6 @@ const App = () => {
         setCategories(categoriesData);
         setAllCategoriesWithItems(allCategoriesWithItems);
         setMenuItems(menuItemsData);
-        console.log(categoryDetail);
       } catch (error) {
         console.error("Error fetching data:", error);
       }

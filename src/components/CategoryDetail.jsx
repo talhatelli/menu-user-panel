@@ -1,7 +1,9 @@
 import React from "react";
-import DishesCard from "../layouts/DishesCard";
+import DishesCard from "../layouts/DisheshCard";
 
 const CategoryDetail = ({ allCategoriesWithItems }) => {
+  const handleAddToCart = (menuItem) => {};
+
   return (
     <div className="min-h-screen flex flex-col justify-center items-center lg:px-32 px-5">
       <div className="flex flex-wrap gap-8 justify-center">
@@ -15,9 +17,10 @@ const CategoryDetail = ({ allCategoriesWithItems }) => {
                 <DishesCard
                   key={index}
                   img={menuItem.imageUrl}
-                  title={menuItem.name}
+                  name={menuItem.name}
                   price={menuItem.price}
                   description={menuItem.description}
+                  onAddToCart={() => handleAddToCart(menuItem)}
                 />
               ))}
             </div>

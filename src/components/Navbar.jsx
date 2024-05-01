@@ -4,15 +4,22 @@ import { BiRestaurant } from "react-icons/bi";
 import Button from "../layouts/Button";
 import { AiOutlineMenuUnfold } from "react-icons/ai";
 import { AiOutlineClose } from "react-icons/ai";
+import Sidebar from "./Sidebar";
 
 const Navbar = ({ categories }) => {
   const [menu, setMenu] = useState(false);
   const [cartItems, setCartItems] = useState([]);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const handleChange = () => {
     setMenu(!menu);
   };
 
+  const handleToggleSidebar = () => {
+    setMenu(!menu);
+
+    setSidebarOpen(!sidebarOpen);
+  };
   const closeMenu = () => {
     setMenu(false);
   };
@@ -68,20 +75,10 @@ const Navbar = ({ categories }) => {
             </Link>
 
             <div className="relative">
-              <Button title="Basket" onClick={handleChange} />
-              {menu && (
-                <div className="absolute right-0 top-16 bg-white w-72 shadow-lg p-4 rounded-md">
-                  <h2 className="text-lg font-semibold mb-2">Cart Items</h2>
-                  <ul>
-                    {cartItems.map((item, index) => (
-                      <li key={index}>
-                        <p>{item.title}</p>
-                        <p>{item.price}tl</p>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
+              <div className="relative" onClick={handleToggleSidebar}>
+                <Button title="Basket" />{" "}
+                {menu && sidebarOpen && <Sidebar cartItems={cartItems} />}
+              </div>
             </div>
           </nav>
 
@@ -128,7 +125,7 @@ const Navbar = ({ categories }) => {
           >
             About
           </Link>
-          <Button title="Login" onClick={handleChange} />
+          <Button title="Basket" onClick={handleToggleSidebar} />
         </div>
       </div>
     </div>

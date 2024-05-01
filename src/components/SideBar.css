@@ -1,0 +1,57 @@
+.sidebar {
+  height: 100%;
+  width: 350px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  background-color: #f8f9fa;
+  overflow-x: hidden;
+  transition: 0.5s;
+  z-index: 100;
+  border-left: 1px solid #ced4da;
+  border-radius: 5px;
+}
+
+.sidebar-header {
+  padding: 26px;
+  text-align: center;
+  background-color: #f96163;
+  color: white;
+  font-weight: bold;
+}
+
+.sidebar-content {
+  padding: 16px;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  padding: 8px 0;
+}
+
+.sidebar ul li p {
+  margin: 0;
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-button {
+  background-color: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.empty-cart {
+  text-align: center;
+  padding: 20px 0;
+  color: #777; /* İstediğiniz renk */
+}

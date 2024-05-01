@@ -46,11 +46,7 @@ const fetchMenuItemCategories = async (categoryId) => {
     throw error;
   }
 };
-console.log(
-  "%csrc/requests/requests.js:38 categoryDetail",
-  "color: #26bfa5;",
-  categoryDetail
-);
+
 const fetchMenuItems = async () => {
   try {
     const response = await fetch(`${BASE_URL}/menu-items/app`);
@@ -71,6 +67,23 @@ const fetchMenuItemDetail = async (menuItemId) => {
     throw error;
   }
 };
+const fetchOrdes = async (payload) => {
+  try {
+    const response = await fetch(`${BASE_URL}/orders/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Siparişleri alırken bir hata oluştu:", error);
+    throw error;
+  }
+};
+
 export {
   fetchMenuItemCategories,
   categoryDetail,
@@ -79,4 +92,5 @@ export {
   fetchCategories,
   colors,
   fetchAllCategoriesWithItems,
+  fetchOrdes,
 };
