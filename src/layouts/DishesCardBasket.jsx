@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { BsStarFill, BsStarHalf } from "react-icons/bs";
-import Button from "../layouts/Button";
 
 const DishesCardBasket = (props) => {
   const [showDescription, setShowDescription] = useState(false);
@@ -12,27 +11,52 @@ const DishesCardBasket = (props) => {
 
   const handleAddToCart = () => {
     const existingItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+    let updatedItems = [];
+    let itemFound = false;
 
-    const newItem = {
-      name: props.name,
-      price: props.price,
-      description: props.description,
-      img: props.img,
-      note: note,
-    };
+    existingItems.forEach((item) => {
+      if (item.name === props.name) {
+        item.count++;
+        itemFound = true;
+      }
+      updatedItems.push(item);
+    });
 
-    const updatedItems = [...existingItems, newItem];
+    if (!itemFound) {
+      const newItem = {
+        name: props.name,
+        price: props.price,
+        description: props.description,
+        img: props.img,
+        note: note,
+        count: 1,
+      };
+      updatedItems.push(newItem);
+    }
 
     localStorage.setItem("cartItems", JSON.stringify(updatedItems));
+    console.log(localStorage.getItem("cartItems"));
   };
 
   const handleRemoveFromCart = () => {
     const existingItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-    const updatedItems = existingItems.filter(
-      (item) => item.name !== props.name
-    );
+    const updatedItems = existingItems
+      .map((item) => {
+        if (item.name === props.name) {
+          // Eğer bu ürün sepette varsa ve count değeri 1'den büyükse azalt
+          if (item.count > 1) {
+            item.count--;
+          } else {
+            // Eğer count değeri 1'den küçükse bu ürünü sepette tamamen kaldır
+            return null;
+          }
+        }
+        return item;
+      })
+      .filter((item) => item !== null); // Null olmayanları filtrele
 
     localStorage.setItem("cartItems", JSON.stringify(updatedItems));
+    console.log(localStorage.getItem("cartItems"));
   };
 
   const handleNoteChange = (e) => {
@@ -75,11 +99,66 @@ const DishesCardBasket = (props) => {
               </div>
             </>
           )}
-          <div onClick={handleAddToCart}>
-            <Button title="+" />
+
+          <div
+            onClick={handleAddToCart}
+            style={{
+              textAlign: "-webkit-center",
+              alignContent: "center",
+              padding: "10px",
+              height: "43px",
+              with: "40px",
+              backgroundColor: "#F4511F ",
+              borderRadius: "50px",
+            }}
+          >
+            <svg
+              class="w-6 h-6 text-gray-800 dark:text-white"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7h-1M8 7h-.688M13 5v4m-2-2h4"
+              />
+            </svg>
           </div>
-          <div onClick={handleRemoveFromCart}>
-            <Button title="-" />
+          <div
+            onClick={handleRemoveFromCart}
+            style={{
+              textAlign: "-webkit-center",
+              alignContent: "center",
+              padding: "10px",
+              height: "43px",
+              with: "40px",
+              backgroundColor: "#F4511F ",
+              borderRadius: "50px",
+            }}
+          >
+            <svg
+              class="w-6 h-6 text-gray-800 dark:text-white"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6"
+              />
+            </svg>
           </div>
         </div>
         {showDescription && (

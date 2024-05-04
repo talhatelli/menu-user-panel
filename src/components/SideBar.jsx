@@ -6,6 +6,8 @@ import { fetchOrdes } from "../requests/Requests";
 const Sidebar = ({ onClose }) => {
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [isOrderPlaced, setIsOrderPlaced] = useState(false);
+  const [isOpen, setIsOpen] = useState(false); // Yeni state
+
   const [cartItems, setCartItems] = useState(
     JSON.parse(localStorage.getItem("cartItems")) || []
   );
@@ -14,7 +16,7 @@ const Sidebar = ({ onClose }) => {
     setIsConfirmationOpen(true);
   };
   const handleSidebarClick = (e) => {
-    e.stopPropagation(); // Dışarı tıklamalarda kapanmayı engellemek için
+    e.stopPropagation();
   };
 
   const handleCloseConfirmation = () => {
@@ -23,19 +25,28 @@ const Sidebar = ({ onClose }) => {
 
   const handlePlaceOrder = async () => {
     console.log("Sipariş verildi!");
-    const response = await fetchOrdes(cartItems); // Tüm eklenen siparişleri gönder
+    const response = await fetchOrdes(cartItems);
     console.log("response", response);
     localStorage.removeItem("cartItems");
     setCartItems([]);
     setIsOrderPlaced(true);
   };
 
+  const handleCloseSidebar = () => {
+    console.log("%csrc/components/SideBar.jsx:36 ", "color: #26bfa5;");
+    setIsOpen(false); // Sidebar'ı kapalı olarak işaretleyin
+    onClose(); // Üst bileşene kapatma işlemini iletiyoruz
+  };
+
   return (
-    <div className="sidebar" onClick={handleSidebarClick}>
+    <div
+      className={`sidebar ${isOpen ? "open" : ""}`}
+      onClick={handleSidebarClick}
+    >
       <div className="sidebar">
         <div className="sidebar-header">
           <h2>Cart Items</h2>
-          <button className="close-button" onClick={onClose}>
+          <button className="close-button" onClick={handleCloseSidebar}>
             X
           </button>
         </div>
@@ -52,26 +63,31 @@ const Sidebar = ({ onClose }) => {
                 />
               ))}
               {!isConfirmationOpen && (
-                <button
-                  class=" text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-24 py-4 text-center me-2 mb-2"
-                  type="button"
-                  onClick={handleOpenConfirmation}
-                >
-                  Siparişi Onayla{" "}
-                </button>
+                <div style={{ padding: "20px 0 0 10px" }}>
+                  <button
+                    class=" text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-24 py-6 text-center me-2 mb-2"
+                    type="button"
+                    onClick={handleOpenConfirmation}
+                  >
+                    Siparişi Onayla{" "}
+                  </button>
+                </div>
               )}
               {isConfirmationOpen && (
-                <div className="order-confirmation">
+                <div className="order-confirmation" style={{ padding: "20px" }}>
                   <p>Siparişi vermek istediğinize emin misiniz?</p>
-                  <div className="confirmation-buttons">
+                  <div
+                    className="confirmation-buttons"
+                    style={{ padding: "10px 0 0 4px" }}
+                  >
                     <button
-                      className="confirm-button"
+                      class=" text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-12 py-4 text-center me-2 mb-2"
                       onClick={handlePlaceOrder}
                     >
                       Evet
                     </button>
                     <button
-                      className="cancel-button"
+                      class="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-12 py-4 text-center me-2 mb-2"
                       onClick={handleCloseConfirmation}
                     >
                       İptal
