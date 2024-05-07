@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { BsStarFill, BsStarHalf } from "react-icons/bs";
-import Button from "../layouts/Button";
 
 const DishesCard = (props) => {
   const [showDescription, setShowDescription] = useState(false);
   const [cartItems, setCartItems] = useState([]);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   const toggleDescription = () => {
     setShowDescription(!showDescription);
@@ -13,19 +13,31 @@ const DishesCard = (props) => {
   const handleAddToCart = () => {
     const existingItems = JSON.parse(localStorage.getItem("cartItems")) || [];
 
-    localStorage.removeItem("cartItems");
+    let found = false;
+    const updatedItems = existingItems.map((item) => {
+      if (item.name === props.name) {
+        found = true;
+        return { ...item, count: item.count + 1 };
+      }
+      return item;
+    });
 
-    const newItem = {
-      name: props.name,
-      price: props.price,
-      description: props.description,
-      img: props.img,
-    };
-
-    const updatedItems = [...existingItems, newItem];
+    if (!found) {
+      const newItem = {
+        name: props.name,
+        price: props.price,
+        description: props.description,
+        img: props.img,
+        count: 1,
+      };
+      updatedItems.push(newItem);
+    }
 
     localStorage.setItem("cartItems", JSON.stringify(updatedItems));
-    // localStorage.removeItem("cartItems");
+    setShowSuccessMessage(true); // Başarılı ekleme olduğunda uyarıyı göster
+    setTimeout(() => {
+      setShowSuccessMessage(false); // 3 saniye sonra uyarıyı kapat
+    }, 3000);
   };
 
   return (
@@ -98,6 +110,15 @@ const DishesCard = (props) => {
         {showDescription && (
           <div className="text-center">
             <h6>{props.description}</h6>
+          </div>
+        )}
+        {showSuccessMessage && (
+          <div
+            className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
+            role="alert"
+          >
+            <strong className="font-bold">Başarılı!</strong>
+            <span className="block sm:inline"> Ürün sepete eklendi.</span>
           </div>
         )}
       </div>

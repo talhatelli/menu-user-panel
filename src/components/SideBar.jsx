@@ -6,7 +6,7 @@ import { fetchOrdes } from "../requests/Requests";
 const Sidebar = ({ onClose }) => {
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [isOrderPlaced, setIsOrderPlaced] = useState(false);
-  const [isOpen, setIsOpen] = useState(false); // Yeni state
+  const [isOpen, setIsOpen] = useState(false);
 
   const [cartItems, setCartItems] = useState(
     JSON.parse(localStorage.getItem("cartItems")) || []
@@ -25,7 +25,8 @@ const Sidebar = ({ onClose }) => {
 
   const handlePlaceOrder = async () => {
     console.log("Sipariş verildi!");
-    const response = await fetchOrdes(cartItems);
+    const orders = JSON.parse(localStorage.getItem("cartItems")) || [];
+    const response = await fetchOrdes(orders); // Sepetteki ürünleri fetchOrdes fonksiyonuna parametre olarak gönder
     console.log("response", response);
     localStorage.removeItem("cartItems");
     setCartItems([]);

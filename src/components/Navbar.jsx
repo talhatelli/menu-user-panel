@@ -75,7 +75,19 @@ const Navbar = ({ categories }) => {
             </Link>
 
             <div className="relative">
-              <div className="relative" onClick={handleToggleSidebar}>
+              <div
+                className="relative"
+                onClick={handleToggleSidebar}
+                style={{
+                  textAlign: "-webkit-center",
+                  alignContent: "center",
+                  padding: "10px",
+                  height: "43px",
+                  with: "40px",
+                  backgroundColor: "#F4511F ",
+                  borderRadius: "50px",
+                }}
+              >
                 <svg
                   class="w-6 h-6 text-gray-800 dark:text-white"
                   aria-hidden="true"

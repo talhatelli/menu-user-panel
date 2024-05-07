@@ -3,7 +3,9 @@ import { BsStarFill, BsStarHalf } from "react-icons/bs";
 
 const DishesCardBasket = (props) => {
   const [showDescription, setShowDescription] = useState(false);
-  const [note, setNote] = useState("");
+  const [note, setNote] = useState(props.note || "");
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [exitShowSuccessMessage, setExitShowSuccessMessage] = useState(false);
 
   const toggleDescription = () => {
     setShowDescription(!showDescription);
@@ -35,7 +37,10 @@ const DishesCardBasket = (props) => {
     }
 
     localStorage.setItem("cartItems", JSON.stringify(updatedItems));
-    console.log(localStorage.getItem("cartItems"));
+    setShowSuccessMessage(true);
+    setTimeout(() => {
+      setShowSuccessMessage(false);
+    }, 3000);
   };
 
   const handleRemoveFromCart = () => {
@@ -43,24 +48,33 @@ const DishesCardBasket = (props) => {
     const updatedItems = existingItems
       .map((item) => {
         if (item.name === props.name) {
-          // Eğer bu ürün sepette varsa ve count değeri 1'den büyükse azalt
           if (item.count > 1) {
             item.count--;
           } else {
-            // Eğer count değeri 1'den küçükse bu ürünü sepette tamamen kaldır
             return null;
           }
         }
         return item;
       })
-      .filter((item) => item !== null); // Null olmayanları filtrele
+      .filter((item) => item !== null);
 
     localStorage.setItem("cartItems", JSON.stringify(updatedItems));
-    console.log(localStorage.getItem("cartItems"));
+    setExitShowSuccessMessage(true);
+    setTimeout(() => {
+      setExitShowSuccessMessage(false); // 3 saniye sonra mesajı kapat
+    }, 3000);
   };
 
   const handleNoteChange = (e) => {
     setNote(e.target.value);
+    const existingItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+    const updatedItems = existingItems.map((item) => {
+      if (item.name === props.name) {
+        return { ...item, note: e.target.value };
+      }
+      return item;
+    });
+    localStorage.setItem("cartItems", JSON.stringify(updatedItems));
   };
 
   return (
@@ -172,10 +186,26 @@ const DishesCardBasket = (props) => {
             type="text"
             placeholder="Notunuzu ekleyin"
             value={note}
-            onChange={handleNoteChange} // Not değişikliklerini takip et
+            onChange={handleNoteChange}
             className="border border-gray-300 rounded-lg px-3 py-2 mt-2"
           />
         </div>
+        {showSuccessMessage && (
+          <div
+            className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
+            role="alert"
+          >
+            <span className="block sm:inline"> Ürün sepete eklendi.</span>
+          </div>
+        )}
+        {exitShowSuccessMessage && (
+          <div
+            className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
+            role="alert"
+          >
+            <span className="block sm:inline"> Ürün sepete çıkarıldı.</span>
+          </div>
+        )}
       </div>
     </div>
   );
